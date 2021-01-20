@@ -228,21 +228,6 @@ odt[,12] <- rowSums(odt[,6:10],na.rm = T)
 
 for(i in 1:379){
   edt[i,13]<-europe[[i]][1,8]/60
-}
-for(i in 1:385){
-  kdt[i,13]<-korea[[i]][1,8]/60
-}
-for(i in 1:381){
-  bdt[i,13]<-brazil[[i]][1,8]/60
-}
-for(i in 1:388){
-  odt[i,13]<-oceania[[i]][1,8]/60
-}
-for(i in 1:387){
-  adt[i,13]<-america[[i]][1,8]/60
-}
-
-for(i in 1:379){
   europe[[i]][,10]<-paste0(europe[[i]][,7],europe[[i]][,9])
   if(europe[[i]][1,10]==1000){
     edt[i,14]<-0}
@@ -261,9 +246,22 @@ for(i in 1:379){
     edt[i,15]<-0}
   if(europe[[i]][1,10]==1001){
     edt[i,15]<-0}
+  
+  edt[i,16]<-unique(europe[[i]][which(europe[[i]][,7]==100),][,6])#T1 gold
+  edt[i,17]<-unique(europe[[i]][which(europe[[i]][,7]==200),][,6])#T2 gold
+  edt[i,18]<-edt[i,11]/as.numeric(edt[i,13])#T1 kill per minute
+  edt[i,19]<-edt[i,12]/as.numeric(edt[i,13])#T2 kill per minute
+  edt[i,20]<-edt[i,16]/as.numeric(edt[i,13])#T1 gold per minute
+  edt[i,21]<-edt[i,17]/as.numeric(edt[i,13])#T2 gold per minute
+  edt[i,22]<-length(which(europe[[i]][c(1:nrow(europe[[i]])),c(1:4)]<6))#T1 assists
+  edt[i,23]<-edt[i,22]/as.numeric(edt[i,11])#T1 assists per kill
+  edt[i,24]<-edt[i,22]/as.numeric(edt[i,13])#T1 assists per minute
+  edt[i,25]<-length(which(europe[[i]][c(1:nrow(europe[[i]])),c(1:4)]>5))#T2 assists
+  edt[i,26]<-edt[i,24]/as.numeric(edt[i,11])#T2 assists per kill
+  edt[i,27]<-edt[i,24]/as.numeric(edt[i,13])#T2 assists per minute
 }
-
 for(i in 1:385){
+  kdt[i,13]<-korea[[i]][1,8]/60
   korea[[i]][,10]<-paste0(korea[[i]][,7],korea[[i]][,9])
   if(korea[[i]][1,10]==1000){
     kdt[i,14]<-0}
@@ -282,29 +280,22 @@ for(i in 1:385){
     kdt[i,15]<-0}
   if(korea[[i]][1,10]==1001){
     kdt[i,15]<-0}
-}
-
-for(i in 1:388){
-  oceania[[i]][,10]<-paste0(oceania[[i]][,7],oceania[[i]][,9])
-  if(oceania[[i]][1,10]==1000){
-    odt[i,14]<-0}
-  if(oceania[[i]][1,10]==2001){
-    odt[i,14]<-0}
-  if(oceania[[i]][1,10]==2000){
-    odt[i,14]<-1}
-  if(oceania[[i]][1,10]==1001){
-    odt[i,14]<-1}
   
-  if(oceania[[i]][1,10]==1000){
-    odt[i,15]<-1}
-  if(oceania[[i]][1,10]==2001){
-    odt[i,15]<-1}
-  if(oceania[[i]][1,10]==2000){
-    odt[i,15]<-0}
-  if(oceania[[i]][1,10]==1001){
-    odt[i,15]<-0}
+  kdt[i,16]<-unique(korea[[i]][which(korea[[i]][,7]==100),][,6])
+  kdt[i,17]<-unique(korea[[i]][which(korea[[i]][,7]==200),][,6])
+  kdt[i,18]<-kdt[i,11]/as.numeric(kdt[i,13])
+  kdt[i,19]<-kdt[i,12]/as.numeric(kdt[i,13])
+  kdt[i,20]<-kdt[i,16]/as.numeric(kdt[i,13])
+  kdt[i,21]<-kdt[i,17]/as.numeric(kdt[i,13])
+  kdt[i,22]<-length(which(korea[[i]][c(1:nrow(korea[[i]])),c(1:4)]<6))#T1 assists
+  kdt[i,23]<-kdt[i,22]/as.numeric(kdt[i,11])#T1 assists per kill
+  kdt[i,24]<-kdt[i,22]/as.numeric(kdt[i,13])#T1 assists per minute
+  kdt[i,25]<-length(which(korea[[i]][c(1:nrow(korea[[i]])),c(1:4)]>5))#T2 assists
+  kdt[i,26]<-kdt[i,24]/as.numeric(kdt[i,11])#T2 assists per kill
+  kdt[i,27]<-kdt[i,24]/as.numeric(kdt[i,13])#T2 assists per minute
 }
 for(i in 1:381){
+  bdt[i,13]<-brazil[[i]][1,8]/60
   brazil[[i]][,10]<-paste0(brazil[[i]][,7],brazil[[i]][,9])
   if(brazil[[i]][1,10]==1000){
     bdt[i,14]<-0}
@@ -323,70 +314,7 @@ for(i in 1:381){
     bdt[i,15]<-0}
   if(brazil[[i]][1,10]==1001){
     bdt[i,15]<-0}
-}
-for(i in 1:382){
-america[[i]][,10]<-paste0(america[[i]][,7],america[[i]][,9])
-if(america[[i]][1,10]==1000){
-  adt[i,14]<-0}
-if(america[[i]][1,10]==2001){
-  adt[i,14]<-0}
-if(america[[i]][1,10]==2000){
-  adt[i,14]<-1}
-if(america[[i]][1,10]==1001){
-  adt[i,14]<-1}
-
-if(america[[i]][1,10]==1000){
-  adt[i,15]<-1}
-if(america[[i]][1,10]==2001){
-  adt[i,15]<-1}
-if(america[[i]][1,10]==2000){
-  adt[i,15]<-0}
-if(america[[i]][1,10]==1001){
-  adt[i,15]<-0}
-}
-for(i in 1:379){
-    edt[i,16]<-unique(europe[[i]][which(europe[[i]][,7]==100),][,6])#T1 gold
-    edt[i,17]<-unique(europe[[i]][which(europe[[i]][,7]==200),][,6])#T2 gold
-    edt[i,18]<-edt[i,11]/as.numeric(edt[i,13])#T1 kill per minute
-    edt[i,19]<-edt[i,12]/as.numeric(edt[i,13])#T2 kill per minute
-    edt[i,20]<-edt[i,16]/as.numeric(edt[i,13])#T1 gold per minute
-    edt[i,21]<-edt[i,17]/as.numeric(edt[i,13])#T2 gold per minute
-    edt[i,22]<-length(which(europe[[i]][c(1:nrow(europe[[i]])),c(1:4)]<6))#T1 assists
-    edt[i,23]<-edt[i,22]/as.numeric(edt[i,11])#T1 assists per kill
-    edt[i,24]<-edt[i,22]/as.numeric(edt[i,13])#T1 assists per minute
-    edt[i,25]<-length(which(europe[[i]][c(1:nrow(europe[[i]])),c(1:4)]>5))#T2 assists
-    edt[i,26]<-edt[i,24]/as.numeric(edt[i,11])#T2 assists per kill
-    edt[i,27]<-edt[i,24]/as.numeric(edt[i,13])#T2 assists per minute
-}
-for(i in 1:385){
-  kdt[i,16]<-unique(korea[[i]][which(korea[[i]][,7]==100),][,6])
-  kdt[i,17]<-unique(korea[[i]][which(korea[[i]][,7]==200),][,6])
-  kdt[i,18]<-kdt[i,11]/as.numeric(kdt[i,13])
-  kdt[i,19]<-kdt[i,12]/as.numeric(kdt[i,13])
-  kdt[i,20]<-kdt[i,16]/as.numeric(kdt[i,13])
-  kdt[i,21]<-kdt[i,17]/as.numeric(kdt[i,13])
-  kdt[i,22]<-length(which(korea[[i]][c(1:nrow(korea[[i]])),c(1:4)]<6))#T1 assists
-  kdt[i,23]<-kdt[i,22]/as.numeric(kdt[i,11])#T1 assists per kill
-  kdt[i,24]<-kdt[i,22]/as.numeric(kdt[i,13])#T1 assists per minute
-  kdt[i,25]<-length(which(korea[[i]][c(1:nrow(korea[[i]])),c(1:4)]>5))#T2 assists
-  kdt[i,26]<-kdt[i,24]/as.numeric(kdt[i,11])#T2 assists per kill
-  kdt[i,27]<-kdt[i,24]/as.numeric(kdt[i,13])#T2 assists per minute
-}
-for(i in 1:388){
-  odt[i,16]<-unique(oceania[[i]][which(oceania[[i]][,7]==100),][,6])
-  odt[i,17]<-unique(oceania[[i]][which(oceania[[i]][,7]==200),][,6])
-  odt[i,18]<-odt[i,11]/as.numeric(odt[i,13])
-  odt[i,19]<-odt[i,12]/as.numeric(odt[i,13])
-  odt[i,20]<-odt[i,16]/as.numeric(odt[i,13])
-  odt[i,21]<-odt[i,17]/as.numeric(odt[i,13])
-  odt[i,22]<-length(which(oceania[[i]][c(1:nrow(oceania[[i]])),c(1:4)]<6))#T1 assists
-  odt[i,23]<-odt[i,22]/as.numeric(odt[i,11])#T1 assists per kill
-  odt[i,24]<-odt[i,22]/as.numeric(odt[i,13])#T1 assists per minute
-  odt[i,25]<-length(which(oceania[[i]][c(1:nrow(oceania[[i]])),c(1:4)]>5))#T2 assists
-  odt[i,26]<-odt[i,24]/as.numeric(odt[i,11])#T2 assists per kill
-  odt[i,27]<-odt[i,24]/as.numeric(odt[i,13])#T2 assists per minute
-}
-for(i in 1:381){
+  
   bdt[i,16]<-unique(brazil[[i]][which(brazil[[i]][,7]==100),][,6])
   bdt[i,17]<-unique(brazil[[i]][which(brazil[[i]][,7]==200),][,6])
   bdt[i,18]<-bdt[i,11]/as.numeric(bdt[i,13])
@@ -400,7 +328,61 @@ for(i in 1:381){
   bdt[i,26]<-bdt[i,24]/as.numeric(bdt[i,11])#T2 assists per kill
   bdt[i,27]<-bdt[i,24]/as.numeric(bdt[i,13])#T2 assists per minute
 }
+for(i in 1:388){
+  odt[i,13]<-oceania[[i]][1,8]/60
+  oceania[[i]][,10]<-paste0(oceania[[i]][,7],oceania[[i]][,9])
+  if(oceania[[i]][1,10]==1000){
+    odt[i,14]<-0}
+  if(oceania[[i]][1,10]==2001){
+    odt[i,14]<-0}
+  if(oceania[[i]][1,10]==2000){
+    odt[i,14]<-1}
+  if(oceania[[i]][1,10]==1001){
+    odt[i,14]<-1}
+  
+  if(oceania[[i]][1,10]==1000){
+    odt[i,15]<-1}
+  if(oceania[[i]][1,10]==2001){
+    odt[i,15]<-1}
+  if(oceania[[i]][1,10]==2000){
+    odt[i,15]<-0}
+  if(oceania[[i]][1,10]==1001){
+    odt[i,15]<-0}
+  
+  odt[i,16]<-unique(oceania[[i]][which(oceania[[i]][,7]==100),][,6])
+  odt[i,17]<-unique(oceania[[i]][which(oceania[[i]][,7]==200),][,6])
+  odt[i,18]<-odt[i,11]/as.numeric(odt[i,13])
+  odt[i,19]<-odt[i,12]/as.numeric(odt[i,13])
+  odt[i,20]<-odt[i,16]/as.numeric(odt[i,13])
+  odt[i,21]<-odt[i,17]/as.numeric(odt[i,13])
+  odt[i,22]<-length(which(oceania[[i]][c(1:nrow(oceania[[i]])),c(1:4)]<6))#T1 assists
+  odt[i,23]<-odt[i,22]/as.numeric(odt[i,11])#T1 assists per kill
+  odt[i,24]<-odt[i,22]/as.numeric(odt[i,13])#T1 assists per minute
+  odt[i,25]<-length(which(oceania[[i]][c(1:nrow(oceania[[i]])),c(1:4)]>5))#T2 assists
+  odt[i,26]<-odt[i,24]/as.numeric(odt[i,11])#T2 assists per kill
+  odt[i,27]<-odt[i,24]/as.numeric(odt[i,13])#T2 assists per minute
+}
 for(i in 1:382){
+  adt[i,13]<-america[[i]][1,8]/60
+  america[[i]][,10]<-paste0(america[[i]][,7],america[[i]][,9])
+  if(america[[i]][1,10]==1000){
+    adt[i,14]<-0}
+  if(america[[i]][1,10]==2001){
+    adt[i,14]<-0}
+  if(america[[i]][1,10]==2000){
+    adt[i,14]<-1}
+  if(america[[i]][1,10]==1001){
+    adt[i,14]<-1}
+  
+  if(america[[i]][1,10]==1000){
+    adt[i,15]<-1}
+  if(america[[i]][1,10]==2001){
+    adt[i,15]<-1}
+  if(america[[i]][1,10]==2000){
+    adt[i,15]<-0}
+  if(america[[i]][1,10]==1001){
+    adt[i,15]<-0}
+  
   adt[i,16]<-unique(america[[i]][which(america[[i]][,7]==100),][,6])
   adt[i,17]<-unique(america[[i]][which(america[[i]][,7]==200),][,6])
   adt[i,18]<-adt[i,11]/as.numeric(adt[i,13])
@@ -414,6 +396,7 @@ for(i in 1:382){
   adt[i,26]<-adt[i,24]/as.numeric(adt[i,11])#T2 assists per kill
   adt[i,27]<-adt[i,24]/as.numeric(adt[i,13])#T2 assists per minute
 }
+
 unicol<-c("ID1","ID2","ID3","ID4","ID5","ID6","ID7","ID8","ID9","ID10","T1Kills","T2Kills","Time","T1Win","T2Win","T1Gold","T2Gold","T1Killspermin","T2Killspermin",
           "T1Goldpermin","T2Goldpermin","T1Assists","T1Assistsperkill","T1Assistspermin","T2Assists","T2Assistsperkill","T2Assistspermin")
 colnames(edt)<-unicol
@@ -444,50 +427,6 @@ eoc2 <- list()
 eam1 <- list()
 eam2 <- list()
 
-for (i in 1:379){ #Modifying the data sets so that they can be turned into edge lists
-  feeu[[i]] <- europe[[i]][,c(1:5)]
-  eeu[[i]] <- reshape2::melt(feeu[[i]], id.vars = "PLAYERID")
-  eeu[[i]] <- eeu[[i]][!is.na(eeu[[i]][, 3]), c(1, 3)]
-  eeu[[i]] <- as.matrix(eeu[[i]])
-  eeu1[[i]] <- eeu[[i]][eeu[[i]][,1]<6,]
-  eeu2[[i]] <- eeu[[i]][eeu[[i]][,1]>5,]
-}
-
-for(i in 1:381){
-  febr[[i]] <- brazil[[i]][,c(1:5)]
-  ebr[[i]] <- reshape2::melt(febr[[i]], id.vars = "PLAYERID")
-  ebr[[i]] <- ebr[[i]][!is.na(ebr[[i]][, 3]), c(1, 3)]
-  ebr[[i]] <- as.matrix(ebr[[i]])
-  ebr1[[i]] <- ebr[[i]][ebr[[i]][,1]<6,]
-  ebr2[[i]] <- ebr[[i]][ebr[[i]][,1]>5,]
-}
-
-for(i in 1:385){
-  fekr[[i]]<-korea[[i]][,c(1:5)]
-  ekr[[i]] <- reshape2::melt(fekr[[i]], id.vars = "PLAYERID")
-  ekr[[i]] <- ekr[[i]][!is.na(ekr[[i]][, 3]), c(1, 3)]
-  ekr[[i]] <- as.matrix(ekr[[i]])
-  ekr1[[i]] <- ekr[[i]][ekr[[i]][,1]<6,]
-  ekr2[[i]] <- ekr[[i]][ekr[[i]][,1]>5,]
-}
-
-for(i in 1:388){ 
-  feoc[[i]]<-oceania[[i]][,c(1:5)]
-  eoc[[i]] <- reshape2::melt(feoc[[i]], id.vars = "PLAYERID")
-  eoc[[i]] <- eoc[[i]][!is.na(eoc[[i]][, 3]), c(1, 3)]
-  eoc[[i]] <- as.matrix(eoc[[i]])
-  eoc1[[i]] <- eoc[[i]][eoc[[i]][,1]<6,]
-  eoc2[[i]] <- eoc[[i]][eoc[[i]][,1]>5,]
-}
-for (i in 1:382){
-  feam[[i]] <- america[[i]][,c(1:5)]
-  eam[[i]] <- reshape2::melt(feam[[i]], id.vars = "PLAYERID")
-  eam[[i]] <- eam[[i]][!is.na(eam[[i]][, 3]), c(1, 3)]
-  eam[[i]] <- as.matrix(eam[[i]])
-  eam1[[i]] <- eam[[i]][eam[[i]][,1]<6,]
-  eam2[[i]] <- eam[[i]][eam[[i]][,1]>5,]
-}
-
 weeu1<-list()
 weeu2 <- list()
 wekr1 <- list()
@@ -510,39 +449,6 @@ conoc2<-list()
 conam1<-list()
 conam2<-list()
 
-for(i in 1:379){
-  weeu1[[i]]<-as.data.frame(paste(eeu1[[i]][,1],eeu1[[i]][,2], sep=""))
-  weeu2[[i]]<-as.data.frame(paste(eeu2[[i]][,1],eeu2[[i]][,2], sep=""))
-  coneu1[[i]]<-nrow(weeu1[[i]])
-  coneu2[[i]]<-nrow(weeu2[[i]])
-}
-for(i in 1:381){
-  webr1[[i]]<-as.data.frame(paste(ebr1[[i]][,1],ebr1[[i]][,2], sep=""))
-  webr2[[i]]<-as.data.frame(paste(ebr2[[i]][,1],ebr2[[i]][,2], sep=""))
-  conbr1[[i]]<-nrow(webr1[[i]])
-  conbr2[[i]]<-nrow(webr2[[i]])
-}
-for(i in 1:385){
-  wekr1[[i]]<-as.data.frame(paste(ekr1[[i]][,1],ekr1[[i]][,2], sep=""))
-  wekr2[[i]]<-as.data.frame(paste(ekr2[[i]][,1],ekr2[[i]][,2], sep=""))
-  conkr1[[i]]<-nrow(wekr1[[i]])
-  conkr2[[i]]<-nrow(wekr2[[i]])
-}
-for(i in 1:388){
-  weoc1[[i]]<-as.data.frame(paste(eoc1[[i]][,1],eoc1[[i]][,2], sep=""))
-  weoc2[[i]]<-as.data.frame(paste(eoc2[[i]][,1],eoc2[[i]][,2], sep=""))
-  conoc1[[i]]<-nrow(weoc1[[i]])
-  conoc2[[i]]<-nrow(weoc2[[i]])
-}
-
-for(i in 1:382){
-  weam1[[i]]<-as.data.frame(paste(eam1[[i]][,1],eam1[[i]][,2], sep=""))
-  weam2[[i]]<-as.data.frame(paste(eam2[[i]][,1],eam2[[i]][,2], sep=""))
-  
-  conam1[[i]]<-nrow(weam1[[i]])
-  conam2[[i]]<-nrow(weam2[[i]])
-}
-
 geu<-list()
 gkr<-list()
 gbr<-list()
@@ -559,27 +465,90 @@ goc2<-list()
 gam1<-list()
 gam2<-list()
 
-for (i in 1:379){
+for (i in 1:379){ #Modifying the data sets so that they can be turned into edge lists
+  feeu[[i]] <- europe[[i]][,c(1:5)]
+  eeu[[i]] <- reshape2::melt(feeu[[i]], id.vars = "PLAYERID")
+  eeu[[i]] <- eeu[[i]][!is.na(eeu[[i]][, 3]), c(1, 3)]
+  eeu[[i]] <- as.matrix(eeu[[i]])
+  eeu1[[i]] <- eeu[[i]][eeu[[i]][,1]<6,]
+  eeu2[[i]] <- eeu[[i]][eeu[[i]][,1]>5,]
+  
+  weeu1[[i]]<-as.data.frame(paste(eeu1[[i]][,1],eeu1[[i]][,2], sep=""))
+  weeu2[[i]]<-as.data.frame(paste(eeu2[[i]][,1],eeu2[[i]][,2], sep=""))
+  coneu1[[i]]<-nrow(weeu1[[i]])
+  coneu2[[i]]<-nrow(weeu2[[i]])
+  
   geu[[i]] <- graph_from_edgelist(eeu[[i]])
   geu1[[i]] <- graph_from_edgelist(eeu1[[i]])
   geu2[[i]] <- graph_from_edgelist(eeu2[[i]])
-  }
-for(i in 1:385){
-  gkr[[i]] <- graph_from_edgelist(ekr[[i]])
-  gkr1[[i]] <- graph_from_edgelist(ekr1[[i]])
-  gkr2[[i]] <- graph_from_edgelist(ekr2[[i]])
 }
+
 for(i in 1:381){
+  febr[[i]] <- brazil[[i]][,c(1:5)]
+  ebr[[i]] <- reshape2::melt(febr[[i]], id.vars = "PLAYERID")
+  ebr[[i]] <- ebr[[i]][!is.na(ebr[[i]][, 3]), c(1, 3)]
+  ebr[[i]] <- as.matrix(ebr[[i]])
+  ebr1[[i]] <- ebr[[i]][ebr[[i]][,1]<6,]
+  ebr2[[i]] <- ebr[[i]][ebr[[i]][,1]>5,]
+  
+  webr1[[i]]<-as.data.frame(paste(ebr1[[i]][,1],ebr1[[i]][,2], sep=""))
+  webr2[[i]]<-as.data.frame(paste(ebr2[[i]][,1],ebr2[[i]][,2], sep=""))
+  conbr1[[i]]<-nrow(webr1[[i]])
+  conbr2[[i]]<-nrow(webr2[[i]])
+  
   gbr[[i]] <- graph_from_edgelist(ebr[[i]])
   gbr1[[i]] <- graph_from_edgelist(ebr1[[i]])
   gbr2[[i]] <- graph_from_edgelist(ebr2[[i]])
 }
-for(i in 1:388){
+
+for(i in 1:385){
+  fekr[[i]]<-korea[[i]][,c(1:5)]
+  ekr[[i]] <- reshape2::melt(fekr[[i]], id.vars = "PLAYERID")
+  ekr[[i]] <- ekr[[i]][!is.na(ekr[[i]][, 3]), c(1, 3)]
+  ekr[[i]] <- as.matrix(ekr[[i]])
+  ekr1[[i]] <- ekr[[i]][ekr[[i]][,1]<6,]
+  ekr2[[i]] <- ekr[[i]][ekr[[i]][,1]>5,]
+  
+  wekr1[[i]]<-as.data.frame(paste(ekr1[[i]][,1],ekr1[[i]][,2], sep=""))
+  wekr2[[i]]<-as.data.frame(paste(ekr2[[i]][,1],ekr2[[i]][,2], sep=""))
+  conkr1[[i]]<-nrow(wekr1[[i]])
+  conkr2[[i]]<-nrow(wekr2[[i]])
+  
+  gkr[[i]] <- graph_from_edgelist(ekr[[i]])
+  gkr1[[i]] <- graph_from_edgelist(ekr1[[i]])
+  gkr2[[i]] <- graph_from_edgelist(ekr2[[i]])
+}
+
+for(i in 1:388){ 
+  feoc[[i]]<-oceania[[i]][,c(1:5)]
+  eoc[[i]] <- reshape2::melt(feoc[[i]], id.vars = "PLAYERID")
+  eoc[[i]] <- eoc[[i]][!is.na(eoc[[i]][, 3]), c(1, 3)]
+  eoc[[i]] <- as.matrix(eoc[[i]])
+  eoc1[[i]] <- eoc[[i]][eoc[[i]][,1]<6,]
+  eoc2[[i]] <- eoc[[i]][eoc[[i]][,1]>5,]
+  
+  weoc1[[i]]<-as.data.frame(paste(eoc1[[i]][,1],eoc1[[i]][,2], sep=""))
+  weoc2[[i]]<-as.data.frame(paste(eoc2[[i]][,1],eoc2[[i]][,2], sep=""))
+  conoc1[[i]]<-nrow(weoc1[[i]])
+  conoc2[[i]]<-nrow(weoc2[[i]])
+  
   goc[[i]] <- graph_from_edgelist(eoc[[i]])
   goc1[[i]] <- graph_from_edgelist(eoc1[[i]])
   goc2[[i]] <- graph_from_edgelist(eoc2[[i]])
 }
 for (i in 1:382){
+  feam[[i]] <- america[[i]][,c(1:5)]
+  eam[[i]] <- reshape2::melt(feam[[i]], id.vars = "PLAYERID")
+  eam[[i]] <- eam[[i]][!is.na(eam[[i]][, 3]), c(1, 3)]
+  eam[[i]] <- as.matrix(eam[[i]])
+  eam1[[i]] <- eam[[i]][eam[[i]][,1]<6,]
+  eam2[[i]] <- eam[[i]][eam[[i]][,1]>5,]
+  
+  weam1[[i]]<-as.data.frame(paste(eam1[[i]][,1],eam1[[i]][,2], sep=""))
+  weam2[[i]]<-as.data.frame(paste(eam2[[i]][,1],eam2[[i]][,2], sep=""))
+  conam1[[i]]<-nrow(weam1[[i]])
+  conam2[[i]]<-nrow(weam2[[i]])
+  
   gam[[i]] <- graph_from_edgelist(eam[[i]])
   gam1[[i]] <- graph_from_edgelist(eam1[[i]])
   gam2[[i]] <- graph_from_edgelist(eam2[[i]])
@@ -777,4 +746,5 @@ plot(density(unidt$Goldpermin), main = "Distribution of gold per minute", lwd=2,
 summary(glm(Win~Intensity+OutdegCent+IndegCent, unidt, family="binomial"))
 summary(lm(Goldpermin~Intensity+IndegCent+OutdegCent, unidt))
 linear<-summary(lm(Goldpermin~Killspermin+Intensity+IndegCent+OutdegCent, unidt))
+lineari<-summary(lm(Goldpermin~Killspermin+Intensity+IndegCent+OutdegCent+Killspermin:Region, unidt))
 mixed<-summary(lmer(Goldpermin~Killspermin+Intensity+IndegCent+OutdegCent+(1|Region),unidt))
