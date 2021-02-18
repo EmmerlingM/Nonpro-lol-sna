@@ -1,6 +1,7 @@
 library(lme4)
 library(lmerTest)
 library(igraph)
+library(fmsb)
 setwd("C:/Users/Mateusz/Documents/Studia/Thesis/Gaming competition")
 
 europe1<-list()
@@ -742,9 +743,12 @@ summary(unidt$IndegCent)
 summary(unidt$OutdegCent)
 summary(unidt$Goldpermin)
 
+NagelkerkeR2(glm(Win~Intensity+OutdegCent+IndegCent+Intensity:Region, unidt, family="binomial"))
+
 plot(density(unidt$Goldpermin), main = "Distribution of gold per minute", lwd=2, col="dark green")
-summary(glm(Win~Intensity+OutdegCent+IndegCent, unidt, family="binomial"))
-summary(lm(Goldpermin~Intensity+IndegCent+OutdegCent, unidt))
+summary(glm(Win~Intensity+OutdegCent+IndegCent+Intensity:Region, unidt, family="binomial"))
+summary(lm(Goldpermin~Intensity+IndegCent+OutdegCent+Intensity:Region, unidt))
 linear<-summary(lm(Goldpermin~Killspermin+Intensity+IndegCent+OutdegCent, unidt))
-lineari<-summary(lm(Goldpermin~Killspermin+Intensity+IndegCent+OutdegCent+Killspermin:Region, unidt))
+lineari<-summary(lm(Goldpermin~Killspermin+Intensity+IndegCent+OutdegCent+Intensity:Region, unidt))
 mixed<-summary(lmer(Goldpermin~Killspermin+Intensity+IndegCent+OutdegCent+(1|Region),unidt))
+lineark<-summary(lm(Killspermin~Intensity+IndegCent+OutdegCent, unidt))
