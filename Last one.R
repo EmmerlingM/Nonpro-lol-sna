@@ -744,6 +744,9 @@ summary(unidt$OutdegCent)
 summary(unidt$Goldpermin)
 
 NagelkerkeR2(glm(Win~Intensity+OutdegCent+IndegCent+Intensity:Region, unidt, family="binomial"))
+boxplot(Goldpermin~Win,data=unidt, main="Gold per min vs Win", 
+        xlab="Win", ylab="Gold")
+ggplot(unidt, aes(Win==1,Gold)) + geom_violin(fill="dark green") + labs(x="Win", y="Gold", title="Violin plots of gold distribution") + stat_summary(fun.data=mean_sdl, geom="pointrange", color="black")
 
 plot(density(unidt$Goldpermin), main = "Distribution of gold per minute", lwd=2, col="dark green")
 summary(glm(Win~Intensity+OutdegCent+IndegCent+Intensity:Region, unidt, family="binomial"))
