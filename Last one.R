@@ -2,6 +2,7 @@ library(lme4)
 library(lmerTest)
 library(igraph)
 library(fmsb)
+library(ggplot2)
 setwd("C:/Users/Mateusz/Documents/Studia/Thesis/Gaming competition")
 
 europe1<-list()
